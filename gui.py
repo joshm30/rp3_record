@@ -36,33 +36,43 @@ class App(QWidget):
         print('PyQt5 button click')
     
     def recSound(self):
-        FORMAT = pyaudio.paInt16
-        CHANNELS = 2
-        RATE = 44100
-        CHUNK = 1024
-        RECORD_SECONDS = 4
-        WAVE_OUTPUT_FILENAME = "stuff.wav"
-        audio = pyaudio.PyAudio()
-        # start Recording
-        stream = audio.open(format=FORMAT, channels=CHANNELS,
-                        rate=RATE, input=True,
-                        frames_per_buffer=CHUNK)
-        print("recording...")
+        # This records an audio file
+        CHUNK = 512
+        FORMAT = pyaudio.paInt16 #paInt8
+        CHANNELS = 1
+        RATE = 44100 #sample rate
+        RECORD_SECONDS = 5
+        WAVE_OUTPUT_FILENAME = "pyaudio-output.wav"
+
+        p = pyaudio.PyAudio()
+
+        stream = p.open(format=FORMAT,
+                        channels=CHANNELS,
+                        rate=RATE,
+                        input=True,
+                        frames_per_buffer=CHUNK) #buffer
+
+        print("* recording")
+
         frames = []
+
         for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+
             data = stream.read(CHUNK)
-            frames.append(data)
-        print("finished recording")
-        # stop Recording
+            frames.append(data) # 2 bytes(16 bits) per channel
+
+        print("* done recording")
+
         stream.stop_stream()
         stream.close()
-        audio.terminate()
-        waveFile = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
-        waveFile.setnchannels(CHANNELS)
-        waveFile.setsampwidth(audio.get_sample_size(FORMAT))
-        waveFile.setframerate(RATE)
-        waveFile.writeframes(b''.join(frames))
-        waveFile.close()
+        p.terminate()
+
+        wf = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
+        wf.setnchannels(CHANNELS)
+        wf.setsampwidth(p.get_sample_size(FORMAT))
+        wf.setframerate(RATE)
+        wf.writeframes(b''.join(frames))
+        wf.close()
         return;
  
 if __name__ == '__main__':
