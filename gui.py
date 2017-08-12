@@ -42,7 +42,7 @@ class App(QWidget):
         CHANNELS = 1
         RATE = 44100 #sample rate
         RECORD_SECONDS = 5
-        WAVE_OUTPUT_FILENAME = "pyaudio-output.wav"
+        WAVE_OUTPUT_FILENAME = "rp3audio/rp3output.wav"
 
         p = pyaudio.PyAudio()
 
