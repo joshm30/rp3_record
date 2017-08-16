@@ -33,7 +33,6 @@ class App(QWidget):
     def initUI(self):
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
- 
         button = QPushButton('Record', self)
         button.setToolTip('This is an example button')
         button.move(100,70) 
@@ -56,10 +55,10 @@ class App(QWidget):
     #     layout.addRow(QLabel("Time:"), spinner)
     #     self.formGroupBox.setLayout(layout)
 
-    @pyqtSlot()
-    def on_click(self):
-        print('PyQt5 button click')
-    
+
+    # def on_click(self):
+    #     print('PyQt5 button click')
+    @pyqtSlot()    
     def recSound(self):
         # This records an audio file
         CHUNK = 512
@@ -98,3 +97,4 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = App()
     sys.exit(app.exec_())
+    
