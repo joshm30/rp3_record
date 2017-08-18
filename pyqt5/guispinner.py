@@ -19,8 +19,7 @@ class Dialog(QDialog):
         self.top = 10
         self.width = 320
         self.height = 200
-
-        self.newTime = 10
+        self.newTime = 4
         mainLayout = QVBoxLayout()
         mainLayout.addWidget(self.formGroupBox)
         # mainLayout.addWidget(buttonBox)
@@ -35,8 +34,8 @@ class Dialog(QDialog):
         spinner.setStyleSheet("QSpinBox { border: 3px inset grey; width:100px; height:50px;} QSpinBox::up-button { subcontrol-position: left; width: 40px; height: 35px;}  QSpinBox::down-button { subcontrol-position: right; width: 40px; height: 35px;}")
         spinner.setValue(4)
         print("Seconds:", spinner.value())
-
         spinner.valueChanged.connect(self.secondsChange)
+
         layout.addRow(QLabel("Sec:"), spinner)        
         #Need to get the value of the spinner to recSound
         # BUTTON STUFF
