@@ -20,6 +20,7 @@ class Dialog(QDialog):
         self.width = 320
         self.height = 200
         self.newTime = 4
+        self.z = 0
         mainLayout = QVBoxLayout()
         mainLayout.addWidget(self.formGroupBox)
         # mainLayout.addWidget(buttonBox)
@@ -40,6 +41,7 @@ class Dialog(QDialog):
         #Need to get the value of the spinner to recSound
         # BUTTON STUFF
         button = QPushButton('Record')
+        
         button.clicked.connect(self.recSound)
         button.setStyleSheet("background-color: #cc3a33; border: none; font-weight:bold; height:100px;") 
         layout.addRow(button)
@@ -51,14 +53,15 @@ class Dialog(QDialog):
         self.newTime = value
 
     # @pyqtSlot()
-    def recSound(self):
+    def recSound(self):        
         # This records an audio file
         CHUNK = 512
         FORMAT = pyaudio.paInt16 #paInt8
         CHANNELS = 1
         RATE = 44100 #sample rate
         RECORD_SECONDS = self.newTime #this is where the variable for seconds should live from the spinbox
-        WAVE_OUTPUT_FILENAME = "rp3audio/rp3output.wav"
+        WAVE_OUTPUT_FILENAME = "rp3audio/output%d.wav" % self.z
+        self.z += 1
         p = pyaudio.PyAudio()
         stream = p.open(format=FORMAT,
                         channels=CHANNELS,
@@ -71,7 +74,7 @@ class Dialog(QDialog):
 
             data = stream.read(CHUNK)
             frames.append(data) # 2 bytes(16 bits) per channel
-        print("* done recording")
+        print("* Finished Recording", WAVE_OUTPUT_FILENAME)
         stream.stop_stream()
         stream.close()
         p.terminate()
