@@ -20,7 +20,7 @@ class Dialog(QDialog):
         self.width = 320
         self.height = 200
         self.newTime = 4
-        self.z = 0
+        # self.z = 0
         mainLayout = QVBoxLayout()
         mainLayout.addWidget(self.formGroupBox)
         # mainLayout.addWidget(buttonBox)
@@ -60,8 +60,9 @@ class Dialog(QDialog):
         CHANNELS = 1
         RATE = 44100 #sample rate
         RECORD_SECONDS = self.newTime #this is where the variable for seconds should live from the spinbox
-        WAVE_OUTPUT_FILENAME = "rp3audio/output%d.wav" % self.z
-        self.z += 1
+        WAVE_OUTPUT_FILENAME = "rp3audio/rp3output.wav"
+        # WAVE_OUTPUT_FILENAME = "rp3audio/output%d.wav" % self.z
+        # self.z += 1
         p = pyaudio.PyAudio()
         stream = p.open(format=FORMAT,
                         channels=CHANNELS,
